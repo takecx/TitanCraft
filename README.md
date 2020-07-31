@@ -64,5 +64,5 @@ For example,
 then, you run 
 
 ```bash
-$ python TitanGenerator.py ./data/sample_data.png --h_max 100 --w_max 150
+$ python TitanGenerator.py ./data/sample.png --kernel_size 5 --iteration 3 --h_max 100 --w_max 150
 ```
