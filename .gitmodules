@@ -1,0 +1,9 @@
+[submodule "obj2schematic"]
+	path = obj2schematic
+	url = https://github.com/takecx/obj2schematic.git
+[submodule "remove_bg"]
+	path = remove_bg
+	url = https://github.com/takecx/remove_bg.git
+[submodule "PIFu"]
+	path = PIFu
+	url = https://github.com/shunsukesaito/PIFu.git
