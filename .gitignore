@@ -129,3 +129,13 @@ dmypy.json
 .pyre/
 
 .vscode/
+
+data/
+
+mask/
+
+output/
+
+results/pifu_demo/
+
+trimaps/
