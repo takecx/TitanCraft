@@ -1,6 +1,7 @@
 import sys
 import os
 import subprocess
+import glob
 
 
 class TitanGenerator(object):
@@ -67,6 +68,11 @@ class TitanGenerator(object):
         commands.extend(['--mlp_dim_color'])
         commands.extend(mlp_colors)
         subprocess.run(commands)
+
+        # postprocess
+        for p in glob.glob('./output/*.png'):
+            if os.path.isfile(p):
+                os.remove(p)
 
     def _convert_obj2schematic(self):
         commands = ['python', 'obj2schematic/Obj2SchemticConverter.py',
