@@ -1,5 +1,7 @@
 # TitanCraft
-Generate titan from single image.
+Generate titan from single image into your Minecraft World!!
+
+![Attack of Titan](./images/titans.png)
 
 ## How to Use
 
@@ -37,7 +39,11 @@ $ conda activate TitanCraft
 $ pip install -r requirements.txt
 ```
 
-### 4. Run script
+### 5. Prepare input image file
+
+Put input image file to `./data/` dir for example.
+
+### 6. Run script
 
 Run `TitanGenerator.py` with some arguments.
 
@@ -66,3 +72,7 @@ then, you run
 ```bash
 $ python TitanGenerator.py ./data/sample.png --kernel_size 5 --iteration 3 --h_max 100 --w_max 150
 ```
+
+### 7. Import `.schematic` to your Minecraft World!!
+
+Import generated `.schematic` file (saved in `./output/`) to your own Minecraft World using [WorldEdit mod](https://www.curseforge.com/minecraft/mc-mods/worldedit).
