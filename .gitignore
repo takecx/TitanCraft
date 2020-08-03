@@ -139,3 +139,5 @@ output/
 results/pifu_demo/
 
 trimaps/
+
+.DS_Store
