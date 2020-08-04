@@ -98,6 +98,7 @@ class TitanGenerator(object):
                 os.remove(p)
 
         os.rmdir('./temp/')
+        print('finish post process....')
 
     def _remove_background(self):
         commands = ['python', 'remove_bg/BackgroundRemover.py',
