@@ -5,18 +5,25 @@ import glob
 
 
 class TitanGenerator(object):
-    def __init__(self, input_image, kernel_size, iteration, w_max, h_max):
-        self.input_image = input_image
+    def __init__(self, args):
+        self.input_image = args.input_image
         input_basename = os.path.splitext(
-            os.path.basename(input_image))[0]
-        self.pifu_obj = os.path.join('./results/pifu_demo/',
-                                     'result_' + input_basename + '_fg.obj')
+            os.path.basename(self.input_image))[0]
+        self.pifu_obj = os.path.join('./PIFu/results/pifu_demo/',
+                                     'result_' + input_basename + '.obj')
+        self.obj2chem_input = os.path.join('./PIFu/results/pifu_demo/',
+                                           input_basename + '.obj')
         # remove_bg
-        self.kernel_size = kernel_size
-        self.iteration = iteration
+        self.kernel_size = args.kernel_size
+        self.iteration = args.iteration
         # obj2schematic
-        self.w_max = w_max
-        self.h_max = h_max
+        if args.output_dir == None:
+            self.output_dir = os.path.join(
+                os.path.dirname(__file__), 'output')
+        else:
+            self.output_dir = args.output_dir
+        self.w_max = args.w_max
+        self.h_max = args.h_max
 
         self._add_path()
 
@@ -53,14 +60,16 @@ class TitanGenerator(object):
         VOL_RES = 256
         CHECKPOINTS_NETG_PATH = './PIFu/checkpoints/net_G'
         CHECKPOINTS_NETC_PATH = './PIFu/checkpoints/net_C'
-        TEST_FOLDER_PATH = './output'
+        TEST_FOLDER_PATH = './remove_bg/output'
+        RESULTS_PATH = './PIFu/results'
 
         commands = ['python', './PIFu/apps/eval.py',
                     '--name', NAME, '--batch_size', str(BATCH_SIZE),
                     '--num_stack', str(4), '--num_hourglass', str(2),
                     '--resolution', str(VOL_RES), '--hg_down', 'ave_pool', '--norm', 'group',
                     '--norm_color', 'group', '--test_folder_path', TEST_FOLDER_PATH, '--load_netG_checkpoint_path',
-                    CHECKPOINTS_NETG_PATH, '--load_netC_checkpoint_path', CHECKPOINTS_NETC_PATH]
+                    CHECKPOINTS_NETG_PATH, '--load_netC_checkpoint_path', CHECKPOINTS_NETC_PATH,
+                    '--results_path', RESULTS_PATH]
         mlp_dims = [v for v in MLP_DIM.split(' ')]
         commands.extend(['--mlp_dim'])
         commands.extend(mlp_dims)
@@ -70,13 +79,16 @@ class TitanGenerator(object):
         subprocess.run(commands)
 
         # postprocess
-        for p in glob.glob('./output/*.png'):
+        for p in glob.glob('./remove_bg/output/*.png'):
             if os.path.isfile(p):
                 os.remove(p)
 
     def _convert_obj2schematic(self):
+        # PIFuの出力ファイル名に'result_'が入っているのでファイル名を変更
+        os.rename(self.pifu_obj, self.obj2chem_input)
+
         commands = ['python', 'obj2schematic/Obj2SchemticConverter.py',
-                    self.pifu_obj, '--h_max', str(self.h_max), '--w_max', str(self.w_max)]
+                    self.obj2chem_input, '--output_dir', self.output_dir, '--h_max', str(self.h_max), '--w_max', str(self.w_max)]
         subprocess.run(commands)
 
 
@@ -87,6 +99,8 @@ def get_args():
                         help="input .png image path")
     parser.add_argument("--kernel_size", type=int, default=5)
     parser.add_argument("--iteration", type=int, default=3)
+    parser.add_argument('--output_dir', type=str, default=None,
+                        help='Output dir of generated .schematic file.')
     parser.add_argument('--h_max', type=int, default=100,
                         help='Max height of converted schematic object.')
     parser.add_argument('--w_max', type=int, default=100,
@@ -101,8 +115,7 @@ if __name__ == '__main__':
         print('checking arguments...')
         args = get_args()
         print('start titan generating...')
-        generator = TitanGenerator(
-            args.input_image, args.kernel_size, args.iteration, args.w_max, args.h_max)
+        generator = TitanGenerator(args)
         generator.generate()
     except Exception as e:
         import traceback
