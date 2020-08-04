@@ -3,7 +3,16 @@
 
 Generate titan from single image into your Minecraft World!!
 
-![Attack of Titan](./images/titans.png)
+![Attack of Titan](./images/titan1.png)
+
+> *その日 人類は思い出した*
+*ヤツらに支配されていた恐怖を…*
+*鳥籠の中に囚われていた屈辱を…*
+
+
+![back of titan](./images/titan2.png)
+
+![titans](./images/titans.png)
 
 ## How to Use
 
