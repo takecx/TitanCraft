@@ -1,4 +1,6 @@
 # TitanCraft
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/takecx/TitanCraft/blob/master/TitanCraft.ipynb)
+
 Generate titan from single image into your Minecraft World!!
 
 ![Attack of Titan](./images/titans.png)
