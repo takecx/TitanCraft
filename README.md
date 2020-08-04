@@ -48,7 +48,7 @@ Put input image file to `./data/` dir for example.
 Run `TitanGenerator.py` with some arguments.
 
 ```bash
-$ python TitanGenerator.py (input image) --kernel_size (morphology kernel size) --iteration (morphology iteration num) --h_max (height max value) --w_max (width max value)
+$ python TitanGenerator.py (input image) --kernel_size (morphology kernel size) --iteration (morphology iteration num) --output_dir (output dir) --h_max (height max value) --w_max (width max value)
 ```
 
 #### Arguments
@@ -56,21 +56,23 @@ $ python TitanGenerator.py (input image) --kernel_size (morphology kernel size) 
 1. input image file path (required)
 2. `--kernel_size` : kernel size of morphology conversion (optional)
 3. `--iteration` : iteration num of morphology conversion (optional)
-4. `--h_max` : max height of converted schematic (optional)
-5. `--w_max` : max width(length) of converted schematic (optional)
+4. `--output_dir` : Output dir of generated .schematic file (optional)
+5. `--h_max` : max height of converted schematic (optional)
+6. `--w_max` : max width(length) of converted schematic (optional)
 
 For example, 
 
 - input image file path : `./data/sample.png`
 - `--kernel_size` : 5
 - `--iteration` : 3
+- `--output_dir` : `./output/`
 - `--h_max` : 100
 - `--w_max` : 150
 
 then, you run 
 
 ```bash
-$ python TitanGenerator.py ./data/sample.png --kernel_size 5 --iteration 3 --h_max 100 --w_max 150
+$ python TitanGenerator.py ./data/sample.png --kernel_size 5 --iteration 3 --output_dir ./output/ --h_max 100 --w_max 150
 ```
 
 ### 7. Import `.schematic` to your Minecraft World!!
