@@ -52,6 +52,12 @@ class TitanGenerator(object):
         self._postprocess()
 
     def _preprocess_image(self):
+        # remove_bg
+        if os.path.exists('./remove_bg/output/'):
+            for p in glob.glob('./remove_bg/output/*.png'):
+                if os.path.isfile(p):
+                    os.remove(p)
+
         print('start image preprocess....')
         target_formats = ['.png', '.jpg', '.jpeg']
         if not os.path.splitext(self.input_image)[1].lower() in target_formats:
@@ -86,11 +92,6 @@ class TitanGenerator(object):
 
     def _postprocess(self):
         print('cleaning....')
-        # remove_bg
-        for p in glob.glob('./remove_bg/output/*.png'):
-            if os.path.isfile(p):
-                os.remove(p)
-
         # temp image
         for p in glob.glob('./temp/*'):
             if os.path.isfile(p):
